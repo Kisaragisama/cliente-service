@@ -27,7 +27,7 @@ public class SecurityConfig {
         http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
         http.authorizeHttpRequests(auth -> auth
-                .requestMatchers("/test").permitAll()
+                .requestMatchers("/", "/test", "/api/cliente/test").permitAll()
                 .requestMatchers("/api/cliente/**").hasAnyRole("ADMIN", "CAJERO", "SUPERVISOR")
                 .anyRequest().hasRole("ADMIN")
         );
