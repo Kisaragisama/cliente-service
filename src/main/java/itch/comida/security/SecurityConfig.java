@@ -27,10 +27,10 @@ public class SecurityConfig {
         http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
         http.authorizeHttpRequests(auth -> auth
-                .requestMatchers("/", "/test", "/api/cliente/test").permitAll()
-                .requestMatchers("/api/cliente/**").hasAnyRole("ADMIN", "CAJERO", "SUPERVISOR")
-                .anyRequest().hasRole("ADMIN")
-        );
+        .requestMatchers("/", "/test", "/api/cliente/test").permitAll()
+        .requestMatchers("/api/cliente/**").permitAll() // ← TEMPORAL
+        .anyRequest().hasRole("ADMIN")
+);
 
         http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
