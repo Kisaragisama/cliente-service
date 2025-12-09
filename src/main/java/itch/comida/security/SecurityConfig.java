@@ -26,13 +26,14 @@ public class SecurityConfig {
         http.cors(cors -> {});
         http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
-       http.authorizeHttpRequests(auth -> auth
-                .requestMatchers("/", "/test", "/api/cliente/test").permitAll()
-                .requestMatchers("/api/cliente/**").hasAnyRole("ADMIN", "CAJERO", "SUPERVISOR")
-                .anyRequest().hasRole("ADMIN")
+        // ✅ Permitir TODO sin autenticación
+        http.authorizeHttpRequests(auth -> auth
+                .anyRequest().permitAll()
         );
 
-        http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+        // ✅ Desactivar el filtro JWT
+        // http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+
         return http.build();
     }
 
@@ -43,7 +44,7 @@ public class SecurityConfig {
         config.setAllowedOrigins(List.of(
                 "http://localhost:5173",
                 "http://localhost:3000",
-                "https://tu-frontend.vercel.app"
+                "https://front-end-nine-mauve.vercel.app" // ✅ Tu dominio real
         ));
         config.setAllowedHeaders(List.of("*"));
         config.setExposedHeaders(List.of("*"));
